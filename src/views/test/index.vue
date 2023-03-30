@@ -18,14 +18,14 @@ const store = testStore()
 //方式二 解决方式一失去响应性的问题
 // const { count } = storeToRefs(store)
 
-//方式三
+//方式三  （推荐使用）
 const count = computed(() => {
     return store.getCount
 })
 
 //按钮点击事件,给你count添加数据
 const addBtn = () => {
-    //方式一
+    //方式一   （推荐使用）
     // store.setCount()
 
     //方式二
