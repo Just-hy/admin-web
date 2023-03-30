@@ -14,4 +14,7 @@ Object.keys(Icons).forEach((key) => {
     //在Vue应用程序中注册对应的组件，组件名为当前属性名
     app.component(key, Icons[key as keyof typeof Icons])
 })
-app.use(router).use(Antd).mount('#app')
+//引入Pinia
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+app.use(pinia).use(router).use(Antd).mount('#app')
