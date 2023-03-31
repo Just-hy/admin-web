@@ -5,7 +5,7 @@
             <a-layout-header class="header">
                 <Header></Header>
             </a-layout-header>
-            <a-layout-content class="main">Content</a-layout-content>
+            <a-layout-content class="main"><router-view></router-view></a-layout-content>
         </a-layout>
     </a-layout>
 </template>
@@ -29,8 +29,12 @@ const collapsed = computed(() => {
 
     .asside {
         background-color: rgb(76, 165, 238);
-        // background-color: #fff;
-        border-right: 1px solid #b3ade0 !important;
+        background-color: #fff;
+        //border-right: 1px solid #b3ade0 !important;
+
+        // :deep(.ant-menu-inline) {
+        //     border-right: none !important;
+        // }
     }
 
     .header {
@@ -45,7 +49,7 @@ const collapsed = computed(() => {
     .main {
         padding: 20px !important;
         // background-color: #fff !important;
-        background-color: rgb(145, 190, 216);
+        //background-color: rgb(145, 190, 216);
     }
 }
 </style>

@@ -15,7 +15,7 @@
                 <template #icon>
                     <home-outlined />
                 </template>
-                <span to="/dashboard">首页</span>
+                <router-link to="/dashboard">首页</router-link>
             </a-menu-item>
             <a-sub-menu key="/system">
                 <template #icon>
@@ -26,19 +26,19 @@
                     <template #icon>
                         <user-outlined />
                     </template>
-                    <span to="/user">用户管理</span>
+                    <router-link to="/user">用户管理</router-link>
                 </a-menu-item>
                 <a-menu-item key="/role">
                     <template #icon>
                         <PieChartOutlined />
                     </template>
-                    <span to="/role">角色管理</span>
+                    <router-link to="/role">角色管理</router-link>
                 </a-menu-item>
                 <a-menu-item key="/menu">
                     <template #icon>
                         <unordered-list-outlined />
                     </template>
-                    <span to="/menu">菜单管理</span>
+                    <router-link to="/menu">菜单管理</router-link>
                 </a-menu-item>
             </a-sub-menu>
             <a-sub-menu key="sub2">
