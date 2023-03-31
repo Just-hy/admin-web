@@ -41,7 +41,7 @@
                     <router-link to="/menu">菜单管理</router-link>
                 </a-menu-item>
             </a-sub-menu>
-            <a-sub-menu key="sub2">
+            <a-sub-menu key="sub1">
                 <template #icon>
                     <AppstoreOutlined />
                 </template>
