@@ -57,10 +57,12 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { reactive, toRefs, computed, ref, watch } from "vue";
+import { reactive, toRefs, computed, ref, watch, onMounted } from "vue";
 import { Collapse, MenuMode, MenuTheme } from "ant-design-vue";
 import { collapseStore } from "@/store/collapse";
 import MenuLogo from "./MenuLogo.vue";
+import { useRoute } from "vue-router";
+import { routes } from '@/router'
 //获取store
 const store = collapseStore()
 
@@ -83,13 +85,41 @@ watch(() => collapse.value, (collapsed: boolean) => {
         show.value = !collapsed
     }
 })
-
+//当前路由
+const route = useRoute()
 const menuData = reactive({
     mode: "inline" as MenuMode,
     theme: "light" as MenuTheme,
-    selectedKeys: ["1"],
-    openKeys: ["sub1"],
+    //大概等于当前选中的路由path
+    selectedKeys: [""],
+    openKeys: [""],
+    // preOpenKeys: ['sub1'],
 });
+//解决刷新之后，选中菜单，有上级的时候，打开上级菜单
+const setMenuOpen = (result: any) => {
+    for (let i = 0; i < result.length; i++) {
+        if (result[i].children) {
+            console.log(result[i])
+            for (let y = 0; y < result[i].children.length; y++) {
+                if (result[i].children[y].path === route.path) {
+                    menuData.openKeys = [result[i].path]
+                }
+            }
+        }
+    }
+};
+//设置当前选中menu
+const selectkey = () => {
+    menuData.selectedKeys.push(route.path)
+}
+watch(() => route.path, () => {
+    selectkey()
+})
+onMounted(() => {
+    selectkey()
+    setMenuOpen(routes)
+})
+//刷新后有下级菜单需要展开
 const changeMode = (checked: boolean) => {
     menuData.mode = checked ? "vertical" : "inline";
 };
