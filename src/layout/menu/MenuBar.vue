@@ -10,7 +10,7 @@
             <span v-show="show">Change Theme</span>
         </div>
         <a-menu v-model:openKeys="menuData.openKeys" v-model:selectedKeys="menuData.selectedKeys" :mode="menuData.mode"
-            :theme="menuData.theme">
+            :theme="menuData.theme" @openChange="onOpenChange">
             <a-menu-item key="/dashboard">
                 <template #icon>
                     <home-outlined />
@@ -99,13 +99,22 @@ const menuData = reactive({
 const setMenuOpen = (result: any) => {
     for (let i = 0; i < result.length; i++) {
         if (result[i].children) {
-            console.log(result[i])
+            // console.log(result[i])
             for (let y = 0; y < result[i].children.length; y++) {
                 if (result[i].children[y].path === route.path) {
                     menuData.openKeys = [result[i].path]
                 }
             }
         }
+    }
+};
+//功能：一次只能打开一个菜单
+const onOpenChange = (openKeys: string[]) => {
+    // console.log(openKeys)
+    if (openKeys.length !== 0) {
+        menuData.openKeys = [openKeys[1]]
+    } else {
+        menuData.openKeys = ['']
     }
 };
 //设置当前选中menu
