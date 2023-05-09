@@ -122,7 +122,10 @@ const selectkey = () => {
     menuData.selectedKeys.push(route.path)
 }
 watch(() => route.path, () => {
+    //清空原来的数据
+    menuData.selectedKeys = ['']
     selectkey()
+    setMenuOpen(routes)
 })
 onMounted(() => {
     selectkey()

@@ -5,7 +5,10 @@
             <a-layout-header class="header">
                 <Header></Header>
             </a-layout-header>
-            <a-layout-content class="main"><router-view></router-view></a-layout-content>
+            <a-layout-content class="main">
+                <Tabs></Tabs>
+                <router-view></router-view>
+            </a-layout-content>
         </a-layout>
     </a-layout>
 </template>
@@ -14,6 +17,7 @@ import { ref, reactive, computed } from "vue";
 import MenuBar from "@/layout/menu/MenuBar.vue";
 import Header from "./header/Header.vue";
 import { collapseStore } from "@/store/collapse";
+import Tabs from "./tabs/Tabs.vue";
 
 //获取store
 const store = collapseStore()
@@ -47,7 +51,7 @@ const collapsed = computed(() => {
     }
 
     .main {
-        padding: 20px !important;
+        padding: 5px 20px !important;
         // background-color: #fff !important;
         //background-color: rgb(145, 190, 216);
     }
