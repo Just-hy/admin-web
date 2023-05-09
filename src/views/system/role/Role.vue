@@ -2,15 +2,15 @@
     <!-- 搜索栏 -->
     <a-form layout="inline" style="margin-bottom: 15px;">
         <a-form-item>
-            <a-input placeholder="请输入角色名称"></a-input>
+            <a-input v-model:value="listParm.roleName" placeholder="请输入角色名称"></a-input>
         </a-form-item>
-        <a-button style="margin-right: 15px;">
+        <a-button @click="searchBtn" style="margin-right: 15px;">
             <template #icon>
                 <search-outlined />
             </template>
             搜索
         </a-button>
-        <a-button type="danger" style="margin-right: 15px;">
+        <a-button @click="resetBtn" type="danger" style="margin-right: 15px;">
             <template #icon>
                 <close-outlined />
             </template>
@@ -27,7 +27,7 @@
     <a-table :dataSource="tableList.list" :scroll="{ y: talbleHeight }" :pagination="rolePage" :columns="columns" bordered>
         <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'action'">
-                <a-button style="margin-right: 15px;" type="primary">
+                <a-button @click="editBtn(record)" style="margin-right: 15px;" type="primary">
                     <template #icon>
                         <edit-outlined />
                     </template>
@@ -39,7 +39,7 @@
                     </template>
                     分配权限
                 </a-button>
-                <a-button type="danger">
+                <a-button @click="deleteBtn(record)" type="danger">
                     <template #icon>
                         <delete-outlined />
                     </template>
@@ -57,7 +57,7 @@ import AddRole from './AddRole.vue';
 import useRole from '@/composable/role/useRole';
 import useTable from '@/composable/role/useTable';
 //表格操作
-const { talbleHeight, tableList, columns, listParm, rolePage, getList } = useTable()
+const { talbleHeight, tableList, columns, listParm, rolePage, getList, searchBtn, resetBtn } = useTable()
 //角色操作
 const { addBtn, editBtn, deleteBtn, save, addRef } = useRole(getList)
 </script>

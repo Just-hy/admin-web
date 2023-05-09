@@ -7,7 +7,17 @@ import 'ant-design-vue/dist/antd.css'
 import *  as Icons from '@ant-design/icons-vue'
 //引入路由
 import router from './router'
+
+//对象复制
+import objCoppy from './utils/objCoppy';
+//信息确定弹框
+import myconfirm from './utils/myconfirm';
 const app = createApp(App)
+
+//全局挂载
+app.config.globalProperties.$objCoppy = objCoppy
+app.config.globalProperties.$myconfirm = myconfirm
+
 //注册图标组件
 //对于Icons对象的每个属性名
 Object.keys(Icons).forEach((key) => {

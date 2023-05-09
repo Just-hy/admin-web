@@ -59,6 +59,16 @@ export default function useTable() {
             tableList.list = res.data.records;
         }
     }
+    //搜索按钮
+    const searchBtn = () => {
+        getList()
+    }
+    //重置按钮 
+    const resetBtn = () => {
+        listParm.currentPage = 1
+        listParm.roleName = ''
+        getList()
+    }
     onMounted(() => {
         getList()
         nextTick(() => {
@@ -72,6 +82,8 @@ export default function useTable() {
         columns,
         listParm,
         rolePage,
-        getList
+        getList,
+        searchBtn,
+        resetBtn
     }
 }

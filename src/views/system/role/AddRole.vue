@@ -20,14 +20,18 @@ import useDialog from '@/hooks/useDialog';
 import { EditType, Title } from '@/type/BaseEnum';
 import { reactive } from 'vue';
 import useForm from 'ant-design-vue/es/form/useForm';
+import useInstance from '@/hooks/useInstance';
+import { RoleType } from '@/api/role/RoleType';
+const { global } = useInstance()
 //弹框属性
 const { dialog, onClose, onConfirm, onShow } = useDialog()
 
 //表单数据
 const addModel = reactive({
+    roleId: '',
     roleName: '',
     roleDesc: '',
-    type: EditType.ADD
+    type: ''
 })
 //表单验证规则
 const rules = reactive({
@@ -52,14 +56,22 @@ const confirm = () => {
     })
 
 }
-//父组件调用
-const show = (type: string) => {
+//父组件调用,弹框显示
+const show = (type: string, row: RoleType) => {
     resetFields();
     //弹框高度
     dialog.height = 150;
     //设置弹框标题
-    type == EditType.ADD ? dialog.title = Title.ADD : dialog.title = Title.EDIT
-    //弹框显示
+    if (type == EditType.ADD) {
+        dialog.title = Title.ADD
+    } else {
+        dialog.title = Title.EDIT
+        //把要编辑的数据设置到表单对象
+        global.$objCoppy(row, addModel)
+    }
+    //设置type
+    addModel.type = type
+    //显示弹框
     onShow()
 }
 
