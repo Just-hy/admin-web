@@ -40,6 +40,7 @@ class request {
         this.instance.interceptors.response.use((res: AxiosResponse) => {
             console.log(res.data)
             if (res.data.code != 200) {
+                message.error(res.data.msg || '服务器出错')
                 return Promise.reject(res.data.msg || '服务器出错')
             } else {
                 return res.data

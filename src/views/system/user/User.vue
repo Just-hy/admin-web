@@ -1,34 +1,66 @@
 <template>
-    <div>用户管理</div>
-    <a-button type="primary" @click="addBtn">新增</a-button>
-    <!-- 弹框组件 -->
-    <sys-dialog :visible="dialog.visible" :title="dialog.title" @on-close="onClose" @on-confirm="onConfirm">
-        <template #content>
-            新增用户
+    <!-- 搜索栏 -->
+    <a-form layout="inline" style="margin-bottom: 25px;">
+        <a-form-item>
+            <a-input v-model:value="listParm.name" placeholder="请输入姓名"></a-input>
+        </a-form-item>
+        <a-form-item>
+            <a-input v-model:value="listParm.phone" placeholder="请输入电话"></a-input>
+        </a-form-item>
+        <a-button @click="searchBtn" style="margin-right: 15px;">
+            <template #icon>
+                <search-outlined />
+            </template>
+            搜索
+        </a-button>
+        <a-button @click="resetBtn" style="margin-right: 15px;" type="danger">
+            <template #icon>
+                <close-outlined />
+            </template>
+            重置
+        </a-button>
+        <a-button type="primary" @click="addBtn">
+            <template #icon>
+                <plus-outlined />
+            </template>
+            新增
+        </a-button>
+    </a-form>
+    <!-- 表格-->
+    <!-- 表格 -->
+    <a-table :scroll="{ y: tableHeight }" :pagination="page" :dataSource="tableList.list" :columns="columns" bordered>
+        <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'sex'">
+                <a-tag color="red" v-if="record.sex == '0'">男</a-tag>
+                <a-tag color="blue" v-else>女</a-tag>
+            </template>
+            <template v-if="column.key === 'action'">
+                <a-button @click="editBtn(record)" style="margin-right: 15px;" type="primary">
+                    <template #icon>
+                        <edit-outlined />
+                    </template>
+                    编辑
+                </a-button>
+                <a-button @click="deleteBtn(record)" type="danger">
+                    <template #icon>
+                        <delete-outlined />
+                    </template>
+                    删除
+                </a-button>
+            </template>
         </template>
-    </sys-dialog>
+    </a-table>
+    <!-- 弹框组件 -->
+    <add-user ref="addRef" @refresh="refresh"></add-user>
 </template>
-
-<script setup lang="ts">
-import { ref, reactive } from "vue";
-import SysDialog from "@/components/SysDialog.vue";
-//弹框属性
-const dialog = reactive({
-    visible: false,
-    title: '新增用户'
-})
-//新增按钮点击事件
-const addBtn = () => {
-    dialog.visible = true
-}
-//弹框关闭
-const onClose = () => {
-    dialog.visible = false
-}
-//弹框确定
-const onConfirm = () => {
-    dialog.visible = false
-}
+  
+<script setup lang='ts'>
+import useUser from '@/composable/user/useUser'
+import AddUser from './AddUser.vue'
+import useTable from '@/composable/user/useTable'
+//表格
+const { tableHeight, tableList, listParm, getList, page, columns, searchBtn, resetBtn, refresh } = useTable()
+//用户操作
+const { addRef, addBtn, editBtn, deleteBtn, save } = useUser(getList)
 </script>
-
-<style scoped lang="scss"></style>
+<style scoped lang='scss'></style>
