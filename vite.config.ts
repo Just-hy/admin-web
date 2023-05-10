@@ -17,5 +17,15 @@ export default defineConfig({
         replacement: resolve(__dirname, 'src')
       }
     ]
-  }
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: {
+          hack: `true; @import (reference) "${resolve('src/theme/style.less')}";`,
+        },
+        javascriptEnabled: true
+      }
+    }
+  },
 })

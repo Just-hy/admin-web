@@ -70,6 +70,39 @@ export const routes: Array<RouteRecordRaw> = [
                 },
             },
         ],
+    },
+    {
+        path: "/receive",
+        component: Layout,
+        name: "receive",
+        meta: {
+            title: "入库管理",
+            icon: "el-icon-menu",
+            roles: ["rec:manage"],
+            parentId: 0,
+        },
+        children: [
+            {
+                path: "/receiveList",
+                component: () => import('@/views/receive/receiveList/ReceiveList.vue'),
+                name: "receiveList",
+                meta: {
+                    title: "收货清单列表",
+                    icon: "el-icon-s-custom",
+                    roles: ["rec:ReceiveList"]
+                },
+            },
+            {
+                path: "/entryPrint",
+                component: () => import('@/views/receive/entryPrint/EntryPrint.vue'),
+                name: "entryPrint",
+                meta: {
+                    title: "菜单管理",
+                    icon: "el-icon-document",
+                    roles: ["rec:entryPrint"]
+                },
+            },
+        ],
     }
 ]
 

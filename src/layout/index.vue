@@ -27,13 +27,16 @@ const collapsed = computed(() => {
     return store.getCollapse
 })
 </script>
-<style scoped lang="scss">
+<style scoped lang="less">
 .layout {
     height: 100%;
 
     .asside {
-        background-color: rgb(76, 165, 238);
-        background-color: #fff;
+        // flex: 0 0 208px !important;
+        // max-width: 208px !important;
+        // min-width: 208px !important;
+        // width: 208px !important;
+        background-color: #0C2D82;
         //border-right: 1px solid #b3ade0 !important;
 
         // :deep(.ant-menu-inline) {
@@ -42,12 +45,12 @@ const collapsed = computed(() => {
     }
 
     .header {
-        height: 50px;
+        height: 65px;
         padding: 0px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background-color: #acb8e7;
+        background-color: @headerColor;
     }
 
     .main {

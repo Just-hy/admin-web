@@ -1,7 +1,7 @@
 <template>
     <div class="logo">
-        <img src="@/assets/1.gif" />
-        <span v-show="show" class="title">IWMS</span>
+        <img :style="{ 'margin-left': collapse ? '0px' : '10px' }" src="@/assets/logo@3x.png" />
+        <span v-show="show" class="title">IMES</span>
     </div>
 </template>
 <script setup lang='ts'>
@@ -32,8 +32,9 @@ watch(() => collapse.value, (collapsed: boolean) => {
 <style scoped lang='scss'>
 .logo {
     // background-color: #2b2f3a;
-    background-color: #2f54eb;
-    height: 50px;
+    //width: 208px;
+    height: 65px;
+    background-color: #0C2D82;
     border: none;
     line-height: 50px;
     display: flex;
@@ -43,20 +44,18 @@ watch(() => collapse.value, (collapsed: boolean) => {
 
     // border-right: 1px solid #e5e5e5;
     img {
-        width: 43px;
-        height: 43px;
-        margin-right: 12px;
+        width: 49px;
+        height: 21px;
+        margin-right: 10px;
+        margin-left: 24px;
     }
 
     .title {
-        height: 50px;
-        background-color: #2f54eb;
-        text-align: center;
-        color: #fff;
-        box-sizing: border-box;
+        width: 62px;
+        background-color: #0C2D82;
+        color: #ffffff;
         font-weight: 600;
-        line-height: 50px;
-        font-size: 20px;
+        font-size: 24px;
         vertical-align: middle;
     }
 }

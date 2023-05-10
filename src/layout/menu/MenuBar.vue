@@ -1,14 +1,6 @@
 <template>
     <div>
         <menu-logo></menu-logo>
-        <div>
-            <a-switch :checked="menuData.mode === 'vertical'" @change="changeMode" />
-            <span v-show="show">Change Mode</span>
-        </div>
-        <div>
-            <a-switch :checked="menuData.theme === 'dark'" @change="changeTheme" />
-            <span v-show="show">Change Theme</span>
-        </div>
         <a-menu v-model:openKeys="menuData.openKeys" v-model:selectedKeys="menuData.selectedKeys" :mode="menuData.mode"
             :theme="menuData.theme" @openChange="onOpenChange">
             <a-menu-item key="/dashboard">
@@ -41,24 +33,30 @@
                     <router-link to="/menu">菜单管理</router-link>
                 </a-menu-item>
             </a-sub-menu>
-            <a-sub-menu key="sub1">
+            <a-sub-menu key="/receive">
                 <template #icon>
-                    <AppstoreOutlined />
+                    <vertical-align-bottom-outlined />
                 </template>
-                <template #title>Navigation Three</template>
-                <a-menu-item key="5">Option 3</a-menu-item>
-                <a-menu-item key="6">Option 4</a-menu-item>
-                <a-sub-menu key="sub1-2" title="Submenu">
-                    <a-menu-item key="7">Option 5</a-menu-item>
-                    <a-menu-item key="8">Option 6</a-menu-item>
-                </a-sub-menu>
+                <template #title>入库管理</template>
+                <a-menu-item key="/receiveList" index="/receiveList">
+                    <template #icon>
+                        <unordered-list-outlined />
+                    </template>
+                    <router-link to="/receiveList">收货清单列表</router-link>
+                </a-menu-item>
+                <a-menu-item key="/entryPrint">
+                    <template #icon>
+                        <printer-outlined />
+                    </template>
+                    <router-link to="/entryPrint">入库条码打印</router-link>
+                </a-menu-item>
             </a-sub-menu>
         </a-menu>
     </div>
 </template>
 <script lang="ts" setup>
 import { reactive, toRefs, computed, ref, watch, onMounted } from "vue";
-import { Collapse, MenuMode, MenuTheme } from "ant-design-vue";
+import { Collapse, ConfigProvider, MenuMode, MenuTheme } from "ant-design-vue";
 import { collapseStore } from "@/store/collapse";
 import MenuLogo from "./MenuLogo.vue";
 import { useRoute } from "vue-router";
@@ -131,11 +129,6 @@ onMounted(() => {
     selectkey()
     setMenuOpen(routes)
 })
-//刷新后有下级菜单需要展开
-const changeMode = (checked: boolean) => {
-    menuData.mode = checked ? "vertical" : "inline";
-};
-const changeTheme = (checked: boolean) => {
-    menuData.theme = checked ? "dark" : "light";
-};
+
 </script>
+<style scoped lang='scss'></style>

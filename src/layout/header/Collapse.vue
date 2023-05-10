@@ -1,9 +1,5 @@
 <template>
-    <component
-        @click="clickBtn"
-        :is="isCollapse ? MenuUnfoldOutlined : MenuFoldOutlined"
-        class="icons"
-    />
+    <component @click="clickBtn" :is="isCollapse ? MenuUnfoldOutlined : MenuFoldOutlined" class="icons" />
 </template>
 <script setup lang='ts'>
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
@@ -25,5 +21,6 @@ const clickBtn = () => {
 <style scoped lang='scss'>
 .icons {
     font-size: 21px;
+    color: #000;
 }
 </style>
