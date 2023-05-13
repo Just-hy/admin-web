@@ -97,7 +97,7 @@ export const routes: Array<RouteRecordRaw> = [
                 component: () => import('@/views/receive/entryPrint/EntryPrint.vue'),
                 name: "entryPrint",
                 meta: {
-                    title: "菜单管理",
+                    title: "入库条码打印",
                     icon: "el-icon-document",
                     roles: ["rec:entryPrint"]
                 },
