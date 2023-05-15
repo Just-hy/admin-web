@@ -1,12 +1,17 @@
 import { ReceiveListParm } from '@/api/receive/ReceiveType'
 import { getListApi } from '@/api/receive/receive'
 import { reactive, onMounted, ref, nextTick } from 'vue'
+import dayjs from 'dayjs'
 type Key = string | number;
 export default function useTable(state: { selectedRowKeys: Key[], loading: boolean }) {
     const tableHeight = ref(0)
-    const tableList = reactive({
-        list: []
-    })
+    const tableList = reactive<{
+        list: { did: number, cdate: string, mdate: string, dbDelDate: string }[];
+    }>({
+        list: [
+            { did: 1, cdate: '', mdate: '', dbDelDate: '' },
+        ]
+    });
     const columns = [
         {
             title: "组织did",
@@ -135,6 +140,11 @@ export default function useTable(state: { selectedRowKeys: Key[], loading: boole
                 records[i].key = records[i].did;
             }
             tableList.list = records;
+            tableList.list.forEach((item) => {
+                item.cdate = dayjs(item.cdate).format('YYYY-MM-DD')
+                item.mdate = dayjs(item.mdate).format('YYYY-MM-DD')
+                item.dbDelDate = dayjs(item.dbDelDate).format('YYYY-MM-DD')
+            })
         }
     }
     onMounted(() => {

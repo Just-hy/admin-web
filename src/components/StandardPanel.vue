@@ -20,7 +20,6 @@
             </template>
         </span>
         <slot name="buttons"></slot>
-        <a-button class=""></a-button>
         <!--搜索栏-->
         <a-form layout="inline">
             <slot name="content"></slot>
@@ -36,13 +35,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 interface TableList {
     list: any[];
 }
 //TODO 编辑与删除的点击事件
 type Key = string | number;
-const emit = defineEmits(['addBtn', 'editBtn', 'deleteBtn', 'searchBtn', 'resetBtn'])
+const emit = defineEmits(['addBtn', 'editBtn', 'deleteBtn', 'searchBtn', 'resetBtn', 'selectedChange'])
 const ChildComponent = {
     inheritAttrs: false
 };
@@ -62,6 +61,9 @@ const deleteBtnEvent = () => {
     emit("deleteBtn")
 }
 const hasSelected = computed(() => props.state.selectedRowKeys.length > 0);
+watch(hasSelected, (newValue, oldValue) => {
+    emit('selectedChange', hasSelected)
+})
 const props = withDefaults(defineProps<{
     state: any
     tableList: TableList
@@ -72,6 +74,7 @@ const props = withDefaults(defineProps<{
 
 <style scoped lang="scss">
 .button {
+    border: 0;
     width: 92px;
     height: 36px;
     border-radius: 4px;

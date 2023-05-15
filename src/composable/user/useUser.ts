@@ -1,11 +1,12 @@
 import { UserType } from "@/api/user/UserType"
 import { EditType } from "@/type/BaseEnum"
 import { ref } from "vue"
-
-
 import { FuncList } from "@/type/BaseType"
-
+import { deleteUserApi } from "@/api/user/user"
+import useInstance from "@/hooks/useInstance"
+import { message } from "ant-design-vue"
 export default function useUser(getList: FuncList) {
+    const { global } = useInstance()
     //弹框属性
     const addRef = ref()
     //新增
@@ -14,11 +15,19 @@ export default function useUser(getList: FuncList) {
     }
     //编辑
     const editBtn = (row: UserType) => {
-
+        addRef.value.show(EditType.EDIT, row)
     }
     //删除
-    const deleteBtn = (row: UserType) => {
-
+    const deleteBtn = async (row: UserType) => {
+        const confirm = await global.$myconfirm()
+        if (confirm) {
+            console.log(row.userId)
+            let res = await deleteUserApi(row.userId)
+            if (res && res.code == 200) {
+                message.success(res.msg)
+                getList()
+            }
+        }
     }
     //保存
     const save = async (parm: UserType) => {

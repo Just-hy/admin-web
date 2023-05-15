@@ -1,6 +1,6 @@
 <template>
-    <a-modal v-model:visible="props.visible" :destroyOnClose="true" :width="props.width" :title="props.title"
-        @cancel="onClose" wrapClassName="custom-modal">
+    <a-modal :visible="props.visible" :destroyOnClose="true" :width="props.width" :title="props.title" @cancel="onClose"
+        wrapClassName="custom-modal">
         <template #footer>
             <a-button type="danger" @click="onClose">取消</a-button>
             <a-button type="primary" @click="onConfirm">确定</a-button>

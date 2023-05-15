@@ -122,8 +122,41 @@ import SysDialog from "@/components/SysDialog.vue";
 import useDialog from "@/hooks/useDialog";
 import { EditType, Title } from "@/type/BaseEnum";
 import useForm from 'ant-design-vue/es/form/useForm';
+import { ReceiveType } from "@/api/receive/ReceiveType";
+import useInstance from '@/hooks/useInstance'
+import dayjs from 'dayjs'
+import locale from "ant-design-vue/lib/date-picker/locale/en_US";
+const { global } = useInstance()
 const { dialog, onClose, onShow } = useDialog()
-const addModel = reactive({
+interface AddModel {
+    did: string;
+    cuser: string;
+    muser: string;
+    cdate: string | Date | dayjs.Dayjs;
+    mdate: string | Date | dayjs.Dayjs;
+    plastupdate: string;
+    dbDoc: string;
+    dbOrganDid: string;
+    dbOrganCode: string;
+    dbDelDate: string | Date | dayjs.Dayjs;
+    dbSupplierDid: string;
+    dbSupplierCode: string;
+    dbStatus: string;
+    dbCheckStatus: string;
+    dbReceiveStatus: string;
+    dbPostStatus: string;
+    dbTosDid: string;
+    dbTosCode: string;
+    dbSrcType: string;
+    dbSrcDoc: string;
+    dbBusinessDoc: string;
+    dbCustomerDid: string;
+    dbCustomerCode: string;
+    dbWarehouseDid: string;
+    dbWarehouseCode: string;
+    dbRemark: string;
+}
+const addModel: AddModel = reactive({
     did: '',
     cuser: '',
     muser: '',
@@ -166,12 +199,18 @@ const onConfirm = () => {
         onClose()
     })
 }
-const show = (type: string) => {
+const show = (type: string, row: ReceiveType) => {
     resetFields()
     if (type == EditType.ADD) {
         dialog.title = Title.ADD
     } else {
         dialog.title = Title.EDIT
+        console.log(row)
+        global.$objCoppy(row, addModel)
+        console.log(addModel)
+        addModel.cdate = dayjs(addModel.cdate)
+        addModel.mdate = dayjs(addModel.mdate)
+        addModel.dbDelDate = dayjs(addModel.dbDelDate)
     }
     onShow()
 }

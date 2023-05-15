@@ -26,7 +26,6 @@
             新增
         </a-button>
     </a-form>
-    <!-- 表格-->
     <!-- 表格 -->
     <a-table :scroll="{ y: tableHeight }" :pagination="page" :dataSource="tableList.list" :columns="columns" bordered>
         <template #bodyCell="{ column, record }">

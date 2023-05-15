@@ -43,7 +43,7 @@
                         </a-form-item>
                     </a-col>
                 </a-row>
-                <a-row>
+                <a-row v-if="addModel.type == '0'">
                     <a-col :span="12">
                         <a-form-item v-bind="validateInfos.password" :labelCol="{ style: 'width:80px;' }" label="密码">
                             <a-input v-model:value="addModel.password" type="password" placeholder="请输入登录密码"></a-input>
@@ -62,8 +62,10 @@ import useDialog from '@/hooks/useDialog'
 import { EditType, Title } from '@/type/BaseEnum'
 import { UserType } from '@/api/user/UserType'
 import useForm from 'ant-design-vue/es/form/useForm'
-import { addUserApi } from "@/api/user/user"
+import { addUserApi, getUserByIdApi, editUserApi } from "@/api/user/user"
 import { message } from "ant-design-vue"
+import useInstance from '@/hooks/useInstance'
+const { global } = useInstance()
 const sex = ref<string>();
 //弹框属性
 const { dialog, onClose, onShow } = useDialog()
@@ -119,12 +121,18 @@ const rules = reactive({
 //获取表单验证属性
 const { validate, resetFields, validateInfos } = useForm(addModel, rules)
 //父组件调用方法
-const show = (type: string) => {
+const show = async (type: string, row: UserType) => {
+    console.log(row)
     resetFields()
     if (type == EditType.ADD) {
         dialog.title = Title.ADD
     } else {
         dialog.title = Title.EDIT
+        let res = await getUserByIdApi(row.userId)
+        if (res && res.code == 200) {
+            global.$objCoppy(res.data, addModel)
+            addModel.roleId = addModel.roleId.toString()
+        }
     }
     addModel.type = type
     onShow()
@@ -144,7 +152,7 @@ const onConfirm = () => {
         if (addModel.type == EditType.ADD) {
             res = await addUserApi(addModel)
         } else {
-
+            res = await editUserApi(addModel)
         }
         if (res && res.code == 200) {
             //信息提示

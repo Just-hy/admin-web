@@ -10,18 +10,16 @@ export default function useReceive(getList: FuncList, tableList: { list: any[] }
     const addBtn = () => {
         addRef.value.show(EditType.ADD)
     }
-    const hasSelected = computed(() => state.selectedRowKeys.length > 0);
-    const editBtn = () => {
-        state.loading = true;
-        // ajax request after empty completing
-        console.log(state.selectedRowKeys)
+    const showBtn = () => {
         const selectedData = state.selectedRowKeys.map((key) =>
             tableList.list.find((item: { key: string }) => item.key === key)
         );
-        setTimeout(() => {
-            state.loading = false;
-            state.selectedRowKeys = [];
-        }, 1000);
+        addRef.value.show(EditType.EDIT, selectedData[0])
+        state.selectedRowKeys = [];
+    }
+    const hasSelected = computed(() => state.selectedRowKeys.length > 0);
+    const editBtn = () => {
+
     };
     const deleteBtn = () => {
         state.loading = true;
@@ -62,6 +60,7 @@ export default function useReceive(getList: FuncList, tableList: { list: any[] }
         save,
         addRef,
         organList,
-        filter
+        filter,
+        showBtn
     }
 }

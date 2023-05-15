@@ -44,13 +44,47 @@
         </a-table>
     </div> -->
     <StandardPanel @addBtn="addBtn" @editBtn="editBtn" @deleteBtn="deleteBtn" @searchBtn="searchBtn" @resetBtn="resetBtn"
-        :state="state" :tableList="tableList">
-        <template #buttons></template>
+        :state="state" :tableList="tableList" @selectedChange="handleSelectedChange">
+        <template #buttons>
+            <a-button @click="showBtn()" class="button" :class="{ 'selectButton': isSelected }" type="primary"
+                :disabled="!isSelected">
+                <template #icon>
+                    <plus-outlined />
+                </template>
+                查看
+            </a-button>
+            <a-button class="button" :class="{ 'selectButton': isSelected }" type="primary" :disabled="!isSelected">
+                <template #icon>
+                    <plus-outlined />
+                </template>
+                完成
+            </a-button>
+            <a-button class="button" :class="{ 'selectButton': isSelected }" style="width: 120px;" type="primary"
+                :disabled="!isSelected">
+                <template #icon>
+                    <plus-outlined />
+                </template>
+                取消完成
+            </a-button>
+            <a-button class="button" :class="{ 'selectButton': isSelected }" type="primary" :disabled="!isSelected">
+                <template #icon>
+                    <plus-outlined />
+                </template>
+                结案
+            </a-button>
+            <a-button class="button" :class="{ 'selectButton': isSelected }" style="width: 120px;" type="primary"
+                :disabled="!isSelected">
+                <template #icon>
+                    <plus-outlined />
+                </template>
+                取消结案
+            </a-button>
+        </template>
         <template #content>
-            <a-form-item label="收货单DID">
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="收货单DID">
                 <a-input v-model:value="listParm.did" class="input" placeholder="请输入收货单DID"></a-input>
             </a-form-item>
-            <a-form-item label="组织" class="input">
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="组织" class="input">
                 <a-select v-model:value="listParm.dbOrganDid" show-search class="input" placeholder="请选择组织"
                     :options="organList" :filterOption="filter"></a-select>
             </a-form-item>
@@ -64,22 +98,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import useReceive from "@/composable/receive/useReceive";
 import StandardTable from "@/components/StandardTable.vue";
 import StandardPanel from "@/components/StandardPanel.vue";
 import AddReceive from './AddReceive.vue'
 import useTable from '@/composable/receive/useTable'
+import { ReceiveType } from "@/api/receive/ReceiveType";
 type Key = string | number;
+const isSelected = ref(false);
+const handleSelectedChange = (hasSelected: any) => {
+    isSelected.value = hasSelected.value
+}
 const state = reactive<{
     selectedRowKeys: Key[];
     loading: boolean;
 }>({
     selectedRowKeys: [], // Check here to configure the default column
-    loading: false,
+    loading: false
 });
 const { tableHeight, tableList, columns, listParm, receivePage, getList, resetBtn, searchBtn } = useTable(state)
-const { addBtn, editBtn, deleteBtn, save, addRef, organList, filter } = useReceive(getList, tableList, state)
+const { addBtn, editBtn, deleteBtn, showBtn, save, addRef, organList, filter } = useReceive(getList, tableList, state)
 // const hasSelected = computed(() => state.selectedRowKeys.length > 0);
 
 // const start = () => {
@@ -103,5 +142,18 @@ const onSelectChange = (selectedRowKeys: Key[]) => {
 <style scoped lang="scss">
 .input {
     width: 281px;
+}
+
+.button {
+    border: solid 1px rgba(0, 0, 0, 0.15);
+    width: 92px;
+    height: 36px;
+    border-radius: 4px;
+    margin: 5px;
+}
+
+.selectButton {
+    background-color: white;
+    color: black;
 }
 </style>
