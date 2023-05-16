@@ -81,11 +81,57 @@
             </a-button>
         </template>
         <template #content>
-            <a-form-item :labelCol="{ style: 'width:80px;' }" label="收货单DID">
+            <!-- <a-form-item :labelCol="{ style: 'width:80px;' }" label="收货单DID">
                 <a-input v-model:value="listParm.did" class="input" placeholder="请输入收货单DID"></a-input>
+            </a-form-item> -->
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="货主">
+                <a-select v-model:value="listParm.dbOwnerDid" show-search class="input" placeholder="请选择货主"
+                    :options="organList" :filterOption="filter"></a-select>
             </a-form-item>
-            <a-form-item :labelCol="{ style: 'width:80px;' }" label="组织" class="input">
-                <a-select v-model:value="listParm.dbOrganDid" show-search class="input" placeholder="请选择组织"
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="单号">
+                <a-input v-model:value="listParm.dbDoc" class="input" placeholder="请输入单号"></a-input>
+            </a-form-item>
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="业务单号">
+                <a-input v-model:value="listParm.dbBusinessDoc" class="input" placeholder="请输入业务单号"></a-input>
+            </a-form-item>
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="收货日期">
+                <div>
+                    <a-date-picker v-model:value="listParm.dbBeginDelDate" style="display: inline-block;" />
+                    <a-date-picker v-model:value="listParm.dbEndDelDate" style="display: inline-block;" />
+                </div>
+            </a-form-item>
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="创建日期">
+                <div>
+                    <a-date-picker v-model:value="listParm.beginCdate" style="display: inline-block;" />
+                    <a-date-picker v-model:value="listParm.endCdate" style="display: inline-block;" />
+                </div>
+            </a-form-item>
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="单据状态">
+                <a-select v-model:value="listParm.dbStatus" show-search class="input" placeholder="请选择单据状态"
+                    :options="organList" :filterOption="filter"></a-select>
+            </a-form-item>
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="清点状态">
+                <a-select v-model:value="listParm.dbCheckStatus" show-search class="input" placeholder="请选择清点状态"
+                    :options="organList" :filterOption="filter"></a-select>
+            </a-form-item>
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="收货状态">
+                <a-select v-model:value="listParm.dbReceiveStatus" show-search class="input" placeholder="请选择收货状态"
+                    :options="organList" :filterOption="filter"></a-select>
+            </a-form-item>
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="过账状态">
+                <a-select v-model:value="listParm.dbPostStatus" show-search class="input" placeholder="请选择过账状态"
+                    :options="organList" :filterOption="filter"></a-select>
+            </a-form-item>
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="仓库">
+                <a-select v-model:value="listParm.dbWarehouseDid" show-search class="input" placeholder="请选择仓库"
+                    :options="organList" :filterOption="filter"></a-select>
+            </a-form-item>
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="供应商">
+                <a-select v-model:value="listParm.dbSupplierDid" show-search class="input" placeholder="请选择供应商"
+                    :options="organList" :filterOption="filter"></a-select>
+            </a-form-item>
+            <a-form-item :labelCol="{ style: 'width:80px;' }" label="客户">
+                <a-select v-model:value="listParm.dbCustomerDid" show-search class="input" placeholder="请选择客户"
                     :options="organList" :filterOption="filter"></a-select>
             </a-form-item>
         </template>
@@ -141,7 +187,7 @@ const onSelectChange = (selectedRowKeys: Key[]) => {
 
 <style scoped lang="scss">
 .input {
-    width: 281px;
+    width: 298px;
 }
 
 .button {

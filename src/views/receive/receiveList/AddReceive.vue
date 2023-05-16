@@ -5,13 +5,13 @@
             <a-form>
                 <a-row>
                     <a-col :span="12">
-                        <a-form-item v-bind="validateInfos.dbOrganDid" label="组织DID">
-                            <a-input v-model:value="addModel.dbOrganDid"></a-input>
+                        <a-form-item v-bind="validateInfos.dbOwnerDid" label="货主DID">
+                            <a-input v-model:value="addModel.dbOwnerDid"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
                         <a-form-item label="组织Code">
-                            <a-input v-model:value="addModel.dbOrganCode"></a-input>
+                            <a-input v-model:value="addModel.dbOwnerCode"></a-input>
                         </a-form-item>
                     </a-col>
                 </a-row>
@@ -136,8 +136,8 @@ interface AddModel {
     mdate: string | Date | dayjs.Dayjs;
     plastupdate: string;
     dbDoc: string;
-    dbOrganDid: string;
-    dbOrganCode: string;
+    dbOwnerDid: string;
+    dbOwnerCode: string;
     dbDelDate: string | Date | dayjs.Dayjs;
     dbSupplierDid: string;
     dbSupplierCode: string;
@@ -164,8 +164,8 @@ const addModel: AddModel = reactive({
     mdate: '',
     plastupdate: '',
     dbDoc: '',
-    dbOrganDid: '',
-    dbOrganCode: '',
+    dbOwnerDid: '',
+    dbOwnerCode: '',
     dbDelDate: '',
     dbSupplierDid: '',
     dbSupplierCode: '',
@@ -187,7 +187,7 @@ const addModel: AddModel = reactive({
 const rules = reactive({
     dbOrganDid: [{
         required: true,
-        message: '请填写组织did',
+        message: '请填写货主did',
         trigger: 'change'
     }]
 })

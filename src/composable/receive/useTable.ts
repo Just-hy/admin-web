@@ -9,12 +9,11 @@ export default function useTable(state: { selectedRowKeys: Key[], loading: boole
         list: { did: number, cdate: string, mdate: string, dbDelDate: string }[];
     }>({
         list: [
-            { did: 1, cdate: '', mdate: '', dbDelDate: '' },
         ]
     });
     const columns = [
         {
-            title: "组织did",
+            title: "货主",
             dataIndex: "dbOrganDid",
             key: "dbOrganDid",
             width: 100,
@@ -92,28 +91,25 @@ export default function useTable(state: { selectedRowKeys: Key[], loading: boole
         did: '',
         cuser: '',
         muser: '',
-        cdate: new Date(),
-        mdate: new Date(),
+        beginCdate: dayjs().subtract(1, 'month'),
+        endCdate: dayjs(),
+        mdate: dayjs(),
         plastupdate: 0,
         dbDoc: '',
-        dbOrganDid: '',
-        dbOrganCode: '',
-        dbDelDate: new Date,
+        dbOwnerDid: '',
+        dbBeginDelDate: dayjs().subtract(1, 'month'),
+        dbEndDelDate: dayjs(),
         dbSupplierDid: '',
-        dbSupplierCode: '',
         dbStatus: '',
         dbCheckStatus: '',
         dbReceiveStatus: '',
         dbPostStatus: '',
         dbTosDid: '',
-        dbTosCode: '',
         dbSrcType: '',
         dbSrcDoc: '',
         dbBusinessDoc: '',
         dbCustomerDid: '',
-        dbCustomerCode: '',
         dbWarehouseDid: '',
-        dbWarehouseCode: '',
         dbRemark: '',
     })
     const receivePage = reactive({
@@ -163,7 +159,7 @@ export default function useTable(state: { selectedRowKeys: Key[], loading: boole
         state.selectedRowKeys = [];
         listParm.currentPage = 1
         listParm.did = ''
-        listParm.dbOrganDid = ''
+        listParm.dbOwnerDid = ''
         getList()
     }
     return {
