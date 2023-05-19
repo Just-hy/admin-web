@@ -73,11 +73,16 @@ import SysDialog from "@/components/SysDialog.vue";
 import useDialog from "@/hooks/useDialog";
 import { EditType, Title } from "@/type/BaseEnum";
 import useForm from 'ant-design-vue/es/form/useForm';
-import { TreeNode } from '@/api/menu/MenuType';
+import { MenuModel, TreeNode } from '@/api/menu/MenuType';
+import { addApi, editApi } from '@/api/menu/menu';
+import { message } from 'ant-design-vue';
+import useInstance from '@/hooks/useInstance';
+const { global } = useInstance()
 const { dialog, onClose, onShow } = useDialog()
 const parentRef = ref()
 //表单绑定数据
 const addModel = reactive({
+    editType: '',
     menuId: '',
     parentId: '',
     title: '',
@@ -145,19 +150,34 @@ watch(() => addModel.type, () => {
         rules.url[0].required = false
     }
 })
+const emit = defineEmits(['refresh'])
 const confirm = () => {
-    validate().then(() => {
+    validate().then(async () => {
+        let res = null;
+        if (addModel.editType == EditType.ADD) {
+            res = await addApi(addModel)
+        } else {
+            res = await editApi(addModel)
+        }
+        if (res && res.code == 200) {
+            message.success(res.msg)
+            //刷新表格
+            emit('refresh')
+        }
         onClose()
     })
 }
-const show = (type: string) => {
+const show = (type: string, row: MenuModel) => {
     resetFields()
     dialog.height = 300
     if (type == EditType.ADD) {
         dialog.title = Title.ADD
     } else {
         dialog.title = Title.EDIT
+        global.$objCoppy(row, addModel)
     }
+    console.log(addModel)
+    addModel.editType = type
     onShow()
 }
 defineExpose({

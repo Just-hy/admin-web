@@ -1,5 +1,5 @@
 import http from "@/http";
-import { RoleListParm, RoleType } from "./RoleType";
+import { RoleListParm, RoleType, TreeParm } from "./RoleType";
 //新增
 export const addApi = (parm: RoleType) => {
     return http.post({
@@ -25,5 +25,12 @@ export const editApi = (parm: RoleType) => {
 export const deleteApi = (roleId: string) => {
     return http.delete({
         url: `/api/role/${roleId}`
+    })
+}
+//树数据回显
+export const getAssignShowApi = (parm: TreeParm) => {
+    return http.get({
+        url: '/api/role/getAssignShow',
+        params: parm
     })
 }

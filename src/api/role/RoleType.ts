@@ -11,3 +11,7 @@ export interface RoleListParm {
     currentPage: number,
     roleName: string
 }
+export interface TreeParm {
+    userId: string,
+    roleId: string
+}

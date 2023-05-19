@@ -33,7 +33,7 @@
                     </template>
                     编辑
                 </a-button>
-                <a-button style="margin-right: 15px;" type="primary">
+                <a-button @click="assignBtn(record)" style="margin-right: 15px;" type="primary">
                     <template #icon>
                         <form-outlined />
                     </template>
@@ -50,15 +50,18 @@
     </a-table>
     <!-- 新增弹框 -->
     <add-role ref="addRef" @save="save"></add-role>
+    <!--分配权限-->
+    <AssignRole ref="assignRef"></AssignRole>
 </template>
 <script setup lang='ts'>
 import { ref, reactive } from 'vue'
-import AddRole from './AddRole.vue';
-import useRole from '@/composable/role/useRole';
-import useTable from '@/composable/role/useTable';
+import AddRole from './AddRole.vue'
+import useRole from '@/composable/role/useRole'
+import useTable from '@/composable/role/useTable'
+import AssignRole from './AssignRole.vue'
 //表格操作
 const { talbleHeight, tableList, columns, listParm, rolePage, getList, searchBtn, resetBtn } = useTable()
 //角色操作
-const { addBtn, editBtn, deleteBtn, save, addRef } = useRole(getList)
+const { addBtn, editBtn, deleteBtn, save, addRef, assignBtn, assignRef } = useRole(getList)
 </script>
 <style scoped lang='scss'></style>

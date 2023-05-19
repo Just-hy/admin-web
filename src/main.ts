@@ -12,11 +12,15 @@ import objCoppy from './utils/objCoppy';
 //信息确定弹框
 import myconfirm from './utils/myconfirm';
 import moment from 'moment';
+import Encrypt from './utils/Encrypt'
+import Decrypt from './utils/Decrypt'
 const app = createApp(App)
 
 //全局挂载
 app.config.globalProperties.$objCoppy = objCoppy
 app.config.globalProperties.$myconfirm = myconfirm
+app.config.globalProperties.$Encrypt = Encrypt
+app.config.globalProperties.$Decrypt = Decrypt
 
 //全局挂载日期格式化配置
 moment.locale('zh-cn'); //设置语言为中文简体

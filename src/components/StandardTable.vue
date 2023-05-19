@@ -7,6 +7,8 @@
 </template>
 
 <script setup lang="ts">
+import { reactive } from 'vue';
+
 type Key = string | number;
 interface ReceivePage {
     current: number;
@@ -31,15 +33,32 @@ const onSelectChangeEvent = (selectedRowKeys: Key[]) => {
     // props.state.selectedRowKeys = selectedRowKeys;
     emit("onSelectChange", selectedRowKeys)
 };
+const receivePage = reactive({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+    showSizeChanger: true,
+    pageSizeOptions: ['10', '20', '30', '50'],
+    showTotal: (total: number) => `共有${total}条数据`,
+    //页数改变时触发
+    onChange: (current: number, size: number) => {
+        props.listParm.currentPage = current;
+        props.listParm.pageSize = size;
+        receivePage.current = current;
+        receivePage.pageSize = size;
+        //getList()重新请求列表数据
+    }
+})
 const props = withDefaults(defineProps<{
     tableHeight: number
-    receivePage: ReceivePage
+    listParm: any
     tableList: TableList
     columns: any
     state: any
 }>(), {
     tableHeight: undefined,
 })
+
 
 </script>
 

@@ -28,7 +28,9 @@ export default function useParent() {
     })
     const onSelect: TreeProps['onSelect'] = (selectedKeys, info) => {
         console.log('selected', selectedKeys, info)
-        selectNode.parentId = selectedKeys[0] as string
+        //selectNode.parentId = selectedKeys[0] as string
+        //如果上面那一行出问题换成下面这行
+        selectNode.parentId = info.node.menuId
         selectNode.parentName = info.node.title
     };
     onMounted(() => {
@@ -39,6 +41,7 @@ export default function useParent() {
         treeData,
         fieldNames,
         onSelect,
-        selectNode
+        selectNode,
+        getTreeDate
     }
 }

@@ -6,6 +6,7 @@ import { message } from "ant-design-vue";
 import { FuncList } from "@/type/BaseType";
 import useInstance from "@/hooks/useInstance";
 export default function useRole(getList: FuncList) {
+    const assignRef = ref()
     const { global } = useInstance()
     //弹框属性
     const addRef = ref();
@@ -47,11 +48,17 @@ export default function useRole(getList: FuncList) {
             getList()
         }
     }
+    //分配权限按钮
+    const assignBtn = (row: RoleType) => {
+        assignRef.value.show(row)
+    }
     return {
         addRef,
         addBtn,
         editBtn,
         deleteBtn,
-        save
+        save,
+        assignRef,
+        assignBtn
     }
 }

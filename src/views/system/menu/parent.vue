@@ -15,9 +15,10 @@ import { message } from 'ant-design-vue';
 import { TreeNode } from '@/api/menu/MenuType'
 import type { TreeProps } from 'ant-design-vue';
 const { dialog, onClose, onShow } = useDialog()
-const { showLine, treeData, fieldNames, onSelect, selectNode } = useParent()
+const { showLine, treeData, fieldNames, onSelect, selectNode, getTreeDate } = useParent()
 //显示弹框
 const show = () => {
+    getTreeDate()
     dialog.title = '选择上级菜单'
     dialog.height = 450;
     dialog.width = 300

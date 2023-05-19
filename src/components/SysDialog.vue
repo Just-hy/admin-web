@@ -5,8 +5,12 @@
             <a-button type="danger" @click="onClose">取消</a-button>
             <a-button type="primary" @click="onConfirm">确定</a-button>
         </template>
-        <div :style="{ height: props.height + 'px' }" style="overflow-y: auto;overflow-x: initial;">
-            <slot name="content"></slot>
+        <div>
+            <slot name="buttons" class="buttonsCss"></slot>
+            <slot name="querys"></slot>
+            <div :style="{ height: props.height + 'px' }" style="overflow-y: auto;overflow-x: initial;">
+                <slot name="content"></slot>
+            </div>
         </div>
     </a-modal>
 </template>
@@ -33,48 +37,27 @@ const emit = defineEmits(['onClose', 'onConfirm'])
 const onClose = () => {
     emit('onClose')
 }
-
 //弹框确定事件
 const onConfirm = () => {
     emit('onConfirm')
 }
 </script>
 
-<style lang="scss">
-:deep(.ant-modal-header) {
-    padding: 14px 24px !important;
-    border-top-left-radius: 7px !important;
-    border-top-right-radius: 7px !important;
-    background: #1890ff !important;
-
-    .ant-modal-title {
-        color: #fff !important;
-    }
+<style scoped lang="scss">
+:deep(button) {
+    border: 0;
+    display: inline-block;
+    height: 36px;
+    border-radius: 4px;
+    margin: 5px;
+    background-color: #00cbe7;
 }
 
-.custom-modal .ant-modal-content {
-    border-top-left-radius: 7px !important;
-    border-top-right-radius: 7px !important;
-
-    .ant-modal-header {
-        padding: 14px 24px !important;
-        border-top-left-radius: 7px !important;
-        border-top-right-radius: 7px !important;
-        background: #1890ff !important;
-
-        .ant-modal-title {
-            color: #fff !important;
-        }
-    }
-
-    .ant-modal-body {
-        padding: 10px 10px !important;
-    }
-
-    .ant-modal-close {
-        .ant-modal-close-icon {
-            color: #fff !important;
-        }
-    }
+.custom-modal {
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 400px;
+    height: 300px;
+    margin: 1000px;
 }
 </style>

@@ -26,6 +26,8 @@ export const tabsStore = defineStore('tabsStore', {
     //定义actions
     actions: {
         addTab(tab: Tabs) {
+            //登录页排除
+            if (tab.path == '/login') return;
             //判断数据是否在选项卡数据中
             if (this.tabsList.some(item => item.path === tab.path)) return;
             //添加到选项卡数据

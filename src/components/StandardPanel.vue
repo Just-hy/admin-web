@@ -1,24 +1,26 @@
 <template>
     <div class="bg">
-        <a-button :class="{ 'createButton': true, 'button': true }" @click="addBtnEvent">
-            <template #icon>
-                <plus-outlined />
-            </template>
-            新增
-        </a-button>
-        <a-button class="button" :class="{ 'modifyButton': hasSelected }" type="primary" :disabled="!hasSelected"
-            @click="editBtnEvent">
-            修改
-        </a-button>
-        <a-button class="button" :class="{ 'deleteButton': hasSelected }" type="primary" :disabled="!hasSelected"
-            :loading="state.loading" @click="deleteBtnEvent">
-            删除
-        </a-button>
-        <span style="margin-left: 8px">
-            <template v-if="hasSelected">
-                {{ `选中 ${state.selectedRowKeys.length} 条记录` }}
-            </template>
-        </span>
+        <template v-if="choose">
+            <a-button :class="{ 'createButton': true, 'button': true }" @click="addBtnEvent">
+                <template #icon>
+                    <plus-outlined />
+                </template>
+                新增
+            </a-button>
+            <a-button class="button" :class="{ 'modifyButton': hasSelected }" type="primary" :disabled="!hasSelected"
+                @click="editBtnEvent">
+                修改
+            </a-button>
+            <a-button class="button" :class="{ 'deleteButton': hasSelected }" type="primary" :disabled="!hasSelected"
+                :loading="state.loading" @click="deleteBtnEvent">
+                删除
+            </a-button>
+            <span style="margin-left: 8px">
+                <template v-if="hasSelected">
+                    {{ `选中 ${state.selectedRowKeys.length} 条记录` }}
+                </template>
+            </span>
+        </template>
         <slot name="buttons"></slot>
         <!--搜索栏-->
         <a-form layout="inline">
@@ -67,8 +69,9 @@ watch(hasSelected, (newValue, oldValue) => {
 const props = withDefaults(defineProps<{
     state: any
     tableList: TableList
+    choose: boolean
 }>(), {
-
+    choose: false
 })
 </script>
 
