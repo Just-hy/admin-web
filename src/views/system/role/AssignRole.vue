@@ -17,14 +17,26 @@ import { RoleType } from "@/api/role/RoleType";
 import useAssign from "@/composable/role/useAssign";
 import { getUserId } from '@/utils/auth'
 import { message } from "ant-design-vue";
+import { assignSaveApi } from '@/api/role/role'
 const { assignTree, showLine, checkedKeys, fieldNames, treeData, getTreeData } = useAssign()
 const { dialog, onClose, onShow } = useDialog()
+const roleId = ref()
 const onConfirm = async () => {
     console.log(assignTree.value.checkedKeys)
     console.log(assignTree.value.halfCheckedKeys)
     const ids = assignTree.value.checkedKeys.concat(assignTree.value.halfCheckedKeys)
+    console.log(ids)
+    let parm = {
+        roleId: roleId.value,
+        list: ids
+    }
+    let res = await assignSaveApi(parm)
+    if (res && res.code == 200) {
+        onClose()
+    }
 }
 const show = (row: RoleType) => {
+    roleId.value = row.roleId
     dialog.title = '为[' + row.roleName + ']分配权限'
     dialog.width = 300
     dialog.height = 450

@@ -1,5 +1,5 @@
 import http from "@/http";
-import { RoleListParm, RoleType, TreeParm } from "./RoleType";
+import { RoleListParm, RoleType, SaveAssign, TreeParm } from "./RoleType";
 //新增
 export const addApi = (parm: RoleType) => {
     return http.post({
@@ -32,5 +32,12 @@ export const getAssignShowApi = (parm: TreeParm) => {
     return http.get({
         url: '/api/role/getAssignShow',
         params: parm
+    })
+}
+//保存权限
+export const assignSaveApi = (parm: SaveAssign) => {
+    return http.post({
+        url: '/api/role/assignSave',
+        data: parm
     })
 }

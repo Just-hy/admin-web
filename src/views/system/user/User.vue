@@ -19,7 +19,7 @@
             </template>
             重置
         </a-button>
-        <a-button type="primary" @click="addBtn">
+        <a-button v-permission="['sys:user:add']" type="primary" @click="addBtn">
             <template #icon>
                 <plus-outlined />
             </template>
@@ -34,13 +34,14 @@
                 <a-tag color="blue" v-else>女</a-tag>
             </template>
             <template v-if="column.key === 'action'">
-                <a-button @click="editBtn(record)" style="margin-right: 15px;" type="primary">
+                <a-button v-permission="['sys:user:edit']" @click="editBtn(record)" style="margin-right: 15px;"
+                    type="primary">
                     <template #icon>
                         <edit-outlined />
                     </template>
                     编辑
                 </a-button>
-                <a-button @click="deleteBtn(record)" type="danger">
+                <a-button v-permission="['sys:user:del']" @click="deleteBtn(record)" type="danger">
                     <template #icon>
                         <delete-outlined />
                     </template>

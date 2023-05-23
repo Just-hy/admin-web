@@ -3,85 +3,32 @@
         <menu-logo></menu-logo>
         <a-menu v-model:openKeys="menuData.openKeys" v-model:selectedKeys="menuData.selectedKeys" :mode="menuData.mode"
             :theme="menuData.theme" @openChange="onOpenChange">
-            <a-menu-item key="/dashboard">
-                <template #icon>
-                    <home-outlined />
+            <template v-for="item in menuList" :key="item.path">
+                <template v-if="item.children && item.children.length == 0">
+                    <a-menu-item :key="item.path">
+                        <template #icon>
+                            <component :is="item.meta.icon"></component>
+                        </template>
+                        <router-link :to="item.path">{{ item.meta.title }}</router-link>
+                    </a-menu-item>
                 </template>
-                <router-link to="/dashboard">首页</router-link>
-            </a-menu-item>
-            <a-sub-menu key="/system">
-                <template #icon>
-                    <setting-outlined />
+                <template v-else>
+                    <sub-menu :key="item.key" :menu-info="item" />
                 </template>
-                <template #title>系统管理</template>
-                <a-menu-item key="/user" index="/user">
-                    <template #icon>
-                        <user-outlined />
-                    </template>
-                    <router-link to="/user">用户管理</router-link>
-                </a-menu-item>
-                <a-menu-item key="/role">
-                    <template #icon>
-                        <PieChartOutlined />
-                    </template>
-                    <router-link to="/role">角色管理</router-link>
-                </a-menu-item>
-                <a-menu-item key="/menu">
-                    <template #icon>
-                        <unordered-list-outlined />
-                    </template>
-                    <router-link to="/menu">菜单管理</router-link>
-                </a-menu-item>
-            </a-sub-menu>
-            <a-sub-menu key="/receive">
-                <template #icon>
-                    <vertical-align-bottom-outlined />
-                </template>
-                <template #title>入库管理</template>
-                <a-menu-item key="/receiveList" index="/receiveList">
-                    <template #icon>
-                        <unordered-list-outlined />
-                    </template>
-                    <router-link to="/receiveList">收货清单列表</router-link>
-                </a-menu-item>
-                <a-menu-item key="/entryPrint">
-                    <template #icon>
-                        <printer-outlined />
-                    </template>
-                    <router-link to="/entryPrint">入库条码打印</router-link>
-                </a-menu-item>
-            </a-sub-menu>
+            </template>
         </a-menu>
     </div>
 </template>
 <script lang="ts" setup>
 import { reactive, toRefs, computed, ref, watch, onMounted } from "vue";
 import { Collapse, ConfigProvider, MenuMode, MenuTheme } from "ant-design-vue";
-import { collapseStore } from "@/store/collapse";
 import MenuLogo from "./MenuLogo.vue";
 import { useRoute } from "vue-router";
-import { routes } from '@/router'
-//获取store
-const store = collapseStore()
-
-//collapsed
-const collapse = computed(() => {
-    return store.getCollapse
-})
-
-//定义show
-const show = ref(true)
-
-//监听collapsed值，做延时处理
-//解决标题闪动的问题,collapse.value变化会传入=》collapsed
-watch(() => collapse.value, (collapsed: boolean) => {
-    if (!collapsed) {
-        setTimeout(() => {
-            show.value = !collapsed
-        }, 250)
-    } else {
-        show.value = !collapsed
-    }
+import SubMenu from "./SubMenu.vue";
+import { menuStore } from "@/store/menu/index";
+const store = menuStore()
+const menuList = computed(() => {
+    return store.menuList as any
 })
 //当前路由
 const route = useRoute()
@@ -95,6 +42,8 @@ const menuData = reactive({
 });
 //解决刷新之后，选中菜单，有上级的时候，打开上级菜单
 const setMenuOpen = (result: any) => {
+    //清空原数据
+    menuData.openKeys = ['']
     for (let i = 0; i < result.length; i++) {
         if (result[i].children) {
             // console.log(result[i])
@@ -123,11 +72,11 @@ watch(() => route.path, () => {
     //清空原来的数据
     menuData.selectedKeys = ['']
     selectkey()
-    setMenuOpen(routes)
+    setMenuOpen(menuList.value)
 })
 onMounted(() => {
     selectkey()
-    setMenuOpen(routes)
+    setMenuOpen(menuList.value)
 })
 
 </script>

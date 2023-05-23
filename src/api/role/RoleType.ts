@@ -15,3 +15,7 @@ export interface TreeParm {
     userId: string,
     roleId: string
 }
+export interface SaveAssign {
+    roleId: string,
+    list: []
+}

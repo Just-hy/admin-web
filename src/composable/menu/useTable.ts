@@ -21,6 +21,12 @@ export default function useMenu() {
             width: 180
         },
         {
+            title: '权限字段',
+            dataIndex: 'code',
+            key: 'code',
+            width: 180
+        },
+        {
             title: '图标',
             dataIndex: 'icon',
             key: 'icon'

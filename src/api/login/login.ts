@@ -1,5 +1,6 @@
 import http from "@/http"
 import { LoginParm } from '@/api/login/LoginType'
+import { getUserId } from "@/utils/auth"
 //登录
 export const loginApi = (parm: LoginParm) => {
     return http.post({
@@ -11,5 +12,14 @@ export const testApi = (parm: string) => {
     return http.post({
         url: '/post/Test',
         data: parm
+    })
+}
+//获取菜单数据
+export const getMenuListApi = () => {
+    return http.get({
+        url: '/api/login/getMenuList',
+        params: {
+            userId: getUserId() || ''
+        }
     })
 }

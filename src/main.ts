@@ -11,6 +11,8 @@ import router from './router'
 import objCoppy from './utils/objCoppy';
 //信息确定弹框
 import myconfirm from './utils/myconfirm';
+//引入按钮权限
+import { permission } from './directives/permission'
 import moment from 'moment';
 import Encrypt from './utils/Encrypt'
 import Decrypt from './utils/Decrypt'
@@ -46,3 +48,6 @@ Object.keys(Icons).forEach((key) => {
 import { createPinia } from 'pinia'
 const pinia = createPinia()
 app.use(pinia).use(router).use(Antd).mount('#app')
+app.directive('permission', permission)
+//权限验证
+import './permission'
